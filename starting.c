@@ -48,4 +48,3 @@ int main() {
   //close_screen_stream();
   return 0;
 }
-//Oscar was here
