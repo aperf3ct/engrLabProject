@@ -55,6 +55,8 @@ int main() {
 	//if ruby is present
 	if(rubyPresent){
 		//printf("Ruby is present\n");
+
+		//makes green square
 		for (int row = 0; row < 50; row++) {
                 for (int col = 0; col < 50; col++) {
                     set_pixel(row, col, 0, 255, 0);
@@ -65,9 +67,13 @@ int main() {
 	}else{
 		//ruby is not present
 		//printf("Ruby is not present\n");
+
+		//gets time and prints it
 		time_t currentTime;
     	time(&currentTime);
 		printf("Current time: %s", ctime(&currentTime)); 
+
+		//makes screen red
 		for (int row = 0; row < 480; row++) {
                 for (int col = 0; col < 640; col++) {
                     set_pixel(row, col, 255, 0, 0);
