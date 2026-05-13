@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 #include "camera_x11.h"
 
 //using namespace std;
@@ -64,7 +65,9 @@ int main() {
 	}else{
 		//ruby is not present
 		//printf("Ruby is not present\n");
-
+		time_t currentTime;
+    	time(&currentTime);
+		printf("Current time: %s", ctime(&currentTime)); 
 		for (int row = 0; row < 480; row++) {
                 for (int col = 0; col < 640; col++) {
                     set_pixel(row, col, 255, 0, 0);
