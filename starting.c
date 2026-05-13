@@ -59,6 +59,7 @@ int main() {
 		for (int row = 0; row < 480; row++) {
                 for (int col = 0; col < 640; col++) {
                     set_pixel(row, col, 255, 0, 0);
+					return 0;
                 }
             }
 	}
