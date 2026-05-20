@@ -278,6 +278,16 @@ void applyVisualFeedback(bool found){
     }
 }
 
+bool checkRedPixels(int current, int previous){
+	//printf("current %d previous %d",current, previous);
+
+	if(current > previous + 1000){
+		printf("too many red pixels");
+        return false;
+	}
+
+	return current > 50;
+}
 
 
 int main() {
@@ -286,13 +296,13 @@ int main() {
         printf("Failed to start camera\n");
         return 1;
     }
-
+int previousRedPixelCount = 0;
   // make 1000 runs  
   for (int countrun = 0; countrun < 10000; countrun++) {
-	take_picture();
 	
 	int currentRedPixelCount = 0;
 	
+	take_picture();
     
 	// for all pixels in latest image
     for (int row = 0 ; row < 480 ; row++) {	
@@ -300,13 +310,23 @@ int main() {
 			uchar r, g ,b ;
 			get_pixel(row, col, &r, &g ,&b);
 
-			if (r > 150 && r > g + 40 && r > b + 40) { 
+			if (r > 60 && r > g + 20 && r > b + 20) { 
                 currentRedPixelCount++; 
+				set_pixel(row, col, 0, 0, 0);
 
 			}
 		}
 	}
-	bool rubyPresent = isRubyPresent(currentRedPixelCount);
+
+	bool rubyPresent;
+
+    if (previousRedPixelCount == 0){
+        rubyPresent = isRubyPresent(currentRedPixelCount);
+    }
+
+    else{
+        rubyPresent = checkRedPixels(currentRedPixelCount, previousRedPixelCount);
+    }
 	
 	applyVisualFeedback(rubyPresent);
 	
@@ -316,6 +336,8 @@ int main() {
 		freezeScreen();
 		break;
 	}
+
+	previousRedPixelCount = currentRedPixelCount;
 
 	//close_screen_stream();
 	//return 0;	
