@@ -279,15 +279,11 @@ void applyVisualFeedback(bool found){
 }
 
 bool checkRedPixels(int current, int previous){
-	printf("current %d previous %d",current, previous);
-
-	if (previous == 0){
-		return true;
-	}
-
+	//printf("current %d previous %d",current, previous);
 
 	if(current > previous + 1000){
-		return false;
+		printf("too many red pixels");
+        return false;
 	}
 
 	return current > 50;
@@ -314,7 +310,7 @@ int previousRedPixelCount = 0;
 			uchar r, g ,b ;
 			get_pixel(row, col, &r, &g ,&b);
 
-			if (r > 60&& r > g + 40 && r > b + 40) { 
+			if (r > 60 && r > g + 20 && r > b + 20) { 
                 currentRedPixelCount++; 
 				set_pixel(row, col, 0, 0, 0);
 
@@ -322,10 +318,15 @@ int previousRedPixelCount = 0;
 		}
 	}
 
-	
+	bool rubyPresent;
 
-	bool rubyPresent = checkRedPixels(currentRedPixelCount, previousRedPixelCount);
-	//isRubyPresent(currentRedPixelCount);
+    if (previousRedPixelCount == 0){
+        rubyPresent = isRubyPresent(currentRedPixelCount);
+    }
+
+    else{
+        rubyPresent = checkRedPixels(currentRedPixelCount, previousRedPixelCount);
+    }
 	
 	applyVisualFeedback(rubyPresent);
 	
