@@ -192,9 +192,18 @@ void drawColon(int x, int y) {
     drawRect(y + 60, x, 10, 10, 255, 0, 0);
 }
 
+void freezeScreen(){
+	bool running = true;
+	while(running){
+	for (int countrun = 0; countrun < 200; countrun++){
+		display_picture();
+		}
+	}
+}
+
 //checks if ruby is present
 bool isRubyPresent(int current){
-    return current > 100;
+    return current > 50;
 }
 
 bool isRubyPresentAtStart = false;
@@ -203,7 +212,6 @@ bool isRubyPresentAtStart = false;
 void applyVisualFeedback(bool found){
 
     if (found){
-
 		isRubyPresentAtStart = true;
 
         //green square
@@ -214,7 +222,7 @@ void applyVisualFeedback(bool found){
         }
 
     } else {
-
+		
 		//makes screen red at start if ruby isn't present
 		if(isRubyPresentAtStart == false){
 			//makes screen red
@@ -223,6 +231,7 @@ void applyVisualFeedback(bool found){
                     set_pixel(row, col, 255, 0, 0);
                 }
             }
+			freezeScreen();
 		}
 
         //current time
@@ -257,6 +266,7 @@ void applyVisualFeedback(bool found){
     }
 }
 
+
 int main() {
 
 	 if (start_camera() != 0) {
@@ -289,13 +299,14 @@ int main() {
 	
 	display_picture();
 
+	if (rubyPresent == false){
+		freezeScreen();
+		break;
+	}
+
 	//close_screen_stream();
 	//return 0;	
 
 	}
 	
-}  
-
-
-
-
+}
