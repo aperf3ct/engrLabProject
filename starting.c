@@ -197,10 +197,14 @@ bool isRubyPresent(int current){
     return current > 100;
 }
 
+bool isRubyPresentAtStart = false;
+
 //replies to visual feedback
 void applyVisualFeedback(bool found){
 
     if (found){
+
+		isRubyPresentAtStart = true;
 
         //green square
         for (int row = 0; row < 50; row++) {
@@ -210,7 +214,17 @@ void applyVisualFeedback(bool found){
         }
 
     } else {
-		
+
+		//makes screen red at start if ruby isn't present
+		if(isRubyPresentAtStart == false){
+			//makes screen red
+			for (int row = 0; row < 480; row++) {
+                for (int col = 0; col < 640; col++) {
+                    set_pixel(row, col, 255, 0, 0);
+                }
+            }
+		}
+
         //current time
         time_t currentTime;
         time(&currentTime);
@@ -281,3 +295,7 @@ int main() {
 	}
 	
 }  
+
+
+
+
