@@ -1,8 +1,5 @@
 /*
- * The code below is meant to detect whether the Red Ruby
- * is present. The starategy implemented by the code is not very effective. 
- * Study the code so that you understand what the strategy is and how 
- * it is implemented. Then design and implement a better startegy.
+ * Red Ruby Project - Team 38.
  * 
  * */
 
@@ -234,6 +231,7 @@ void applyVisualFeedback(bool found){
         int hour = timeInfo->tm_hour;
         int min  = timeInfo->tm_min;
         int sec  = timeInfo->tm_sec;
+		theft_log(hour, min); // Added 21.05.26 for theft log function
 
         //starting position
         int x = 40;
@@ -255,6 +253,18 @@ void applyVisualFeedback(bool found){
         drawDigit(x + 300, y, sec / 10);
         drawDigit(x + 360, y, sec % 10);
     }
+}
+
+//Function for the log file, added 21.05.26
+void theft_log(int hour, int min) { 
+    FILE *logFile = fopen("theft_log.txt", "a"); //OK to change names if something else makes sense
+    if (logFile == NULL) {
+        printf("Error opening theft log file\n");
+        return 1;
+    }
+    fprintf(logFile, "Ruby stolen: %02d:02d\n", hours, minutes)); //Doesn’t need words but may look nicer
+    fclose(logFile);
+    return 0;
 }
 
 int main() {
